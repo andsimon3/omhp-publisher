@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="omhp-token" content="__TOKEN__">
+  <title>OMHP Publisher</title>
+  <link rel="icon" href="https://raw.githubusercontent.com/andsimon3/omhp/master/src/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/ui.css">
+  <script type="module" src="/ui-client.js"></script>
+</head>
+<body>
+  <main>
+    <header class="brand"><img src="https://raw.githubusercontent.com/andsimon3/omhp/master/src/logo.svg" alt="" width="44" height="44"><h1>OMHP Publisher</h1></header>
+    <button id="open-editor" type="button">Добавить запись</button>
+    <dialog id="editor" aria-labelledby="editor-title">
+      <form id="entry">
+        <h2 id="editor-title">Добавить запись</h2>
+        <label>Тип записи<select name="action"><option value="addImage">Изображения</option><option value="addVideo">Видео</option><option value="addThread">Тред</option></select></label>
+        <label>ID<input name="id" required></label>
+        <label id="entry-title">Название<input name="title" required></label>
+        <label id="entry-files">Файлы<input name="media" type="file" required multiple></label>
+        <label id="entry-text" hidden>Текст<textarea name="text" disabled required></textarea></label>
+        <label id="entry-theme" hidden>Тема (необязательно)<input name="theme" placeholder="/image/orangery" disabled></label>
+        <div class="buttons"><button id="cancel-editor" type="button">Отмена</button><button>Добавить</button></div>
+        <p id="entry-status" role="status"></p>
+      </form>
+    </dialog>
+    <div class="steps">
+      <form id="build">
+        <h2>Собрать хост</h2>
+        <label>JSON-каталог<input name="catalog" value="decorator-portfolio/catalog.json" required></label>
+        <label>Новая папка сборки<input name="output" value="omhp-dist" required></label>
+        <label>Публичный адрес<input name="publicUrl" type="url" placeholder="https://media.example.org" required></label>
+        <button value="build">Собрать</button>
+      </form>
+      <form id="upload">
+        <h2>Загрузить на S3</h2>
+        <label>Папка сборки<input name="output" value="omhp-dist" required></label>
+        <label>Бакет и префикс<input name="destination" placeholder="s3://my-bucket/media" required></label>
+        <label>Профиль AWS CLI<input name="profile" placeholder="Профиль по умолчанию"></label>
+        <div class="buttons"><button value="preview">Проверить без загрузки</button><button value="upload">Загрузить</button></div>
+      </form>
+    </div>
+    <section aria-labelledby="inventory-title">
+      <div class="inventory-header">
+        <h2 id="inventory-title">Содержимое каталога</h2>
+        <button id="refresh-inventory" type="button">Обновить список</button>
+      </div>
+      <p id="inventory-status" role="status"></p>
+      <ul id="inventory"></ul>
+    </section>
+    <section aria-labelledby="log-title">
+      <h2 id="log-title">Журнал</h2>
+      <p id="status" role="status"></p>
+      <pre id="log" tabindex="0"></pre>
+    </section>
+  </main>
+</body>
+</html>
